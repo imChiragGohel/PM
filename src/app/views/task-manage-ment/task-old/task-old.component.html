@@ -1,0 +1,94 @@
+<div class="row bottom-margin">
+    <div class="col-12">
+        <button class="btn btn-primary btn-sm float-right" (click)="onAddTask()">Add Task</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <strong>Project Task</strong>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="addTaskArray">
+                    <table class="table">
+                        <tbody>
+                            <ng-container formArrayName="projects" *ngIf="projects?.controls?.length > 0">
+                                <ng-container *ngFor="let item of projects.controls; let i=index" [formGroupName]="i">
+                                    <tr>
+                                        <td class="td-border-top-remove" colspan="8"></td>
+                                    </tr>
+                                    <tr (click)="plus(i)">
+                                        <td class="td-border-top-remove td-color" width='20px'>
+                                            <span>
+                                                <i class="fa " [ngClass]="clickIndex == i ? 'fa-minus' : 'fa-plus'"></i>
+                                            </span>
+                                        </td>
+                                        <td class="td-border-top-remove td-color" colspan="8"><strong>Project :-
+                                            </strong>{{item.value.projectName}}</td>
+                                    </tr>
+                                    <ng-container formArrayName="listOfTask"
+                                        *ngIf="listOfTask(i)?.controls?.length > 0">
+                                        <ng-container *ngFor="let tsk of listOfTask(i).controls let j=index"
+                                            [formGroupName]="j">
+                                            <tr *ngIf="clickIndex == i && j == 0">
+                                                <td class="td-border-top-remove"></td>
+                                                <td class="td-border-top-remove"><strong>Task Name</strong></td>
+                                                <td class="td-border-top-remove"><strong>Descriptions</strong></td>
+                                                <td class="td-border-top-remove"><strong>Startdate</strong></td>
+                                                <td class="td-border-top-remove"><strong>Enddate</strong></td>
+                                                <td class="td-border-top-remove"><strong>Status</strong></td>
+                                                <td class="td-border-top-remove"><strong>Action</strong></td>
+                                            </tr>
+                                            <tr *ngIf="clickIndex == i">
+                                                <td class="td-border-top-remove"></td>
+                                                <td class="td-border-top-remove">
+                                                    <!-- <span *ngIf="editIndex != j">{{tsk.value.name}}</span> -->
+                                                    <input type="text" class="form-control" placeholder="Task name"
+                                                        formControlName="name">
+                                                </td>
+                                                <td class="td-border-top-remove">
+                                                    <!-- {{tsk.value.descriptions}} -->
+                                                    <textarea class="form-control" placeholder="Descreption"
+                                                        formControlName="descriptions"></textarea>
+                                                </td>
+                                                <td class="td-border-top-remove">
+                                                    {{tsk.value.startDate}}
+                                                </td>
+                                                <td class="td-border-top-remove">{{tsk.value.endDate}}</td>
+                                                <td class="td-border-top-remove">
+                                                    <select class="form-control" formControlName="status">
+                                                        <option [value]='1'>Pending</option>
+                                                        <option [value]='2'>Inprocess</option>
+                                                        <option [value]='3'>Completed</option>
+                                                    </select>
+                                                    <!-- <span class="badge"
+                                                        [ngClass]="tsk.value.status == 1 ? 'badge-primary' : tsk.value.status == 2 ? 'badge-warning' : 'badge-success'">
+                                                        {{tsk.value.status == 1 ? 'Active' : tsk.value.status == 2 ? 'Inprocess' : 'Completed'}}
+                                                    </span> -->
+                                                </td>
+                                                <td class="td-border-top-remove">
+                                                    <!-- <button class="btn btn-success btn-sm"
+                                                        (click)="onTaskEdit(j,tsk.value)">Edit</button> -->
+                                                    <button class="btn btn-danger btn-sm"
+                                                        (click)="onDeleteTask(item.value,tsk.value)">Delete</button>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+                            <tr>
+                                <td class="td-border-top-remove" colspan="8"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="addTaskComponent">
+    <app-add-task (modalClose)="onModalClose($event)"></app-add-task>
+</ng-container>

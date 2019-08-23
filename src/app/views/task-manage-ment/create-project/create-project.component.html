@@ -1,0 +1,108 @@
+<div class="row">
+    <div class="col-sm-3">
+        <div class="card">
+            <div class="card-header">
+                <strong>Project</strong>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="projectForm" novalidate role="form" autocomplete="off">
+                    <div class="row">
+                        <div class="form-group col-sm-12">
+                            <label>Name * :</label>
+                            <input type="text" placeholder="Enter project name" class="form-control"
+                                formControlName="name">
+                            <span class="text-danger"
+                                *ngIf="projectForm.get('name').hasError('required') && projectForm.get('name').touched">
+                                Enter name
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <!-- <input type="text" placeholder="Enter project type" class="form-control"
+                                formControlName="type"> -->
+                            <!-- <label>Type * :</label> -->
+                            <label class="lbl-align">Fixed Price &nbsp;&nbsp;</label>
+                            <label class="switch switch-pill switch-info">
+                                <input checked="" class="switch-input" type="checkbox" formControlName="type">
+                                <span class="switch-slider"></span>
+                            </label>
+                            <label class="lbl-align">&nbsp;&nbsp; Hourly</label>
+                            <!-- <span class="text-danger"
+                                *ngIf="projectForm.get('type').hasError('required') && projectForm.get('type').touched">
+                                Enter type
+                            </span> -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-12">
+                            <label>Descriptions * :</label>
+                            <textarea type="text" placeholder="Enter project descriptions" class="form-control"
+                                formControlName="descriptions" maxlength="50"></textarea>
+                            <span class="text-danger"
+                                *ngIf="projectForm.get('descriptions').hasError('required') && projectForm.get('descriptions').touched">
+                                Enter descriptions
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-12">
+                            <label>Create date * :</label>
+                            <my-date-picker [options]="_tms.myDatePickerOptions" formControlName="create_date">
+                            </my-date-picker>
+                            <span class="text-danger"
+                                *ngIf="projectForm.get('create_date').hasError('required') && projectForm.get('create_date').touched">
+                                Enter createdate
+                            </span>
+                        </div>
+                    </div>
+                    <button *ngIf="projectForm.value.isEdit"
+                        class="btn btn-light text-center text-black pull-right left-margin" type="submit"
+                        (click)="onFormCancel()">Cancel</button>
+                    <button class="btn btn-info text-center text-white pull-right" type="submit"
+                        (click)="saveProject()">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-9">
+        <div class="row bottom-margin">
+            <div class="col-12">
+                <input type="text" class="form-control div-search" placeholder="Search..." [(ngModel)]="searchProject">
+            </div>
+        </div>
+        <table width="100%" class="table table-back-color">
+            <thead>
+                <th>Project Name</th>
+                <th>Type</th>
+                <th>Descriptions</th>
+                <th>Creation Date</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let pro of lst_project | filter:searchProject;">
+                    <tr>
+                        <td>{{pro.name}}</td>
+                        <td>{{pro.type}}</td>
+                        <td>{{pro.descriptions}}</td>
+                        <td>{{pro.createdate}}</td>
+                        <td>
+                            <button class="btn btn-success btn-sm right-margin" (click)="onEdit(pro)">Edit</button>
+                            <button class="btn btn-danger btn-sm" (click)="onDelete(pro)">Delete</button>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+            <tbody *ngIf="lst_project?.length == 0">
+                <tr colspan="4">
+                    <td>No Data Available.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<ng-container *ngIf="confirmDialogOpen">
+    <app-confirmation-dialog-box (onDialog)="dialogEvent($event)" [dialogData]="dialogData">
+    </app-confirmation-dialog-box>
+</ng-container>

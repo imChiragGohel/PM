@@ -1,0 +1,73 @@
+<div bsModal #addTaskModel="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true" [config]="{backdrop: 'static',  keyboard: false}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{ editingTask?.isEdit ? 'Edit Task' : 'Add Task' }}</h4>
+                <button type="button" class="close" (click)="onModalClose()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="addTask" novalidate>
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <label>Name * :</label>
+                            <input type="text" placeholder="Task Name" class="form-control" formControlName="name">
+                            <span class="text-danger"
+                                *ngIf="addTask.get('name').hasError('required') && addTask.get('name').touched">
+                                Enter task name
+                            </span>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>Project * :</label>
+                            <select class="form-control" formControlName="projectId">
+                                <option value="">Select Project</option>
+                                <option [value]="item.id" *ngFor="let item of lst_project">{{item.name}}</option>
+                            </select>
+                            <span class="text-danger"
+                                *ngIf="addTask.get('projectId').hasError('required') && addTask.get('projectId').touched">
+                                Choose project
+                            </span>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label>Descriptions * :</label>
+                            <textarea class="form-control" placeholder="Descriptions"
+                                formControlName="description"></textarea>
+                            <span class="text-danger"
+                                *ngIf="addTask.get('description').hasError('required') && addTask.get('description').touched">
+                                Enter descriptions
+                            </span>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>Startdate & Enddate * :</label>
+                            <div>
+                                <my-date-range-picker name="mydaterange" formControlName="start_end_date"
+                                    [options]="_tms.myDateRangePickerOptions" required>
+                                </my-date-range-picker>
+                            </div>
+                            <span class="text-danger"
+                                *ngIf="addTask.get('start_end_date').hasError('required') && addTask.get('start_end_date').touched">
+                                Enter startdate & enddate
+                            </span>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>Status * :</label>
+                            <div>
+                                <select class="form-control" formControlName="status">
+                                    <option [value]="1">Pending</option>
+                                    <option [value]="2">Inprocess</option>
+                                    <option [value]="3">Completed</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="onModalClose()">Close</button>
+                <button type="submit" class="btn btn-primary" (click)="onTaskSave()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

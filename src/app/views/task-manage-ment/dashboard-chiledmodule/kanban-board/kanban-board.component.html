@@ -1,0 +1,66 @@
+<ng-container>
+    <div class="row bottom-margin">
+        <div class="col-12 card-align">
+            <input type="text" class="form-control div-search" placeholder="Search..." [(ngModel)]="searchProject">
+        </div>
+    </div>
+    <div class="row card-align">
+        <ng-container *ngFor="let pro of lst_projects | filter:searchProject;">
+            <div class="col-sm-4 col-md-3">
+                <div class="card bg-default text-center">
+                    <div class="card-body">
+                        <blockquote class="card-bodyquote">
+                            <footer>
+                                <strong><cite class="cite-style cite pointer" [title]="pro.name"
+                                        (click)="redirectToTask(pro)">{{pro.name}}</cite></strong>
+                            </footer>
+                            <p class="pointer" [title]="pro.descriptions" (click)="redirectToTask(pro)">
+                                {{pro.descriptions}}</p>
+                            <p class="card-align pointer" (click)="redirectToTask(pro)">
+                                <span class="text-info right-margin">Pending:
+                                    <b>
+                                        {{pro?.counter ? pro.counter.active?.length ? pro.counter.active?.length : 0 : 0 }}
+                                    </b>
+                                </span>
+                                <span class="text-warning right-margin">Inprocess:
+                                    <b>
+                                        {{pro?.counter ? pro.counter.inprocess?.length ? pro.counter.inprocess?.length : 0 : 0 }}
+                                    </b>
+                                </span>
+                                <span class="text-success">Completed:
+                                    <b>
+                                        {{pro?.counter ? pro.counter.completed?.length ? pro.counter.completed?.length : 0 : 0 }}
+                                    </b>
+                                </span>
+                            </p>
+                            <p class="card-align">
+                                <button class="btn btn-secondary btn-sm float-left right-margin"
+                                    (click)="onProjectClick(pro)">Kanban</button>
+                                <button class="btn btn-secondary btn-sm float-right" (click)="onGanttChart(pro)">Gantt
+                                    Chart</button>
+                            </p>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="lst_projects?.length == 0">
+            <div class="col-sm-4 col-md-3">
+                <div class="card bg-default text-center">
+                    <div class="card-body">
+                        <blockquote class="card-bodyquote">
+                            <footer>
+                                <strong><cite class="cite-style cite" [title]="">Projects are not
+                                        available.</cite></strong>
+                            </footer>
+                            <p class="card-align top-margin">
+                                <button class="btn btn-secondary btn-sm float-right" (click)="onProjectRedirect()">Create
+                                    Project</button>
+                            </p>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</ng-container>

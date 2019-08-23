@@ -1,0 +1,118 @@
+<ng-container>
+    <div class="row bottom-margin">
+        <div class="col-8">
+            <p class="pro-title"><span>{{projectObj?.name}}</span></p>
+        </div>
+        <div class="col-4">
+            <!-- <button class="btn btn-secondary btn-sm float-right left-margin" (click)="onBackToKanban()">Back</button> -->
+            <button class="btn btn-primary btn-sm float-right" (click)="onAddTask()">Add Task</button>
+        </div>
+    </div>
+    <div cdkDropListGroup class="row">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header text-info">
+                    <strong><i class="fa fa-clock-o"></i>&nbsp;Pending</strong>
+                </div>
+                <div class="card-body" style="padding:5px">
+                    <div class="col pointer card-max-height " cdkDropList [cdkDropListData]="lst_active"
+                        (cdkDropListDropped)="drop($event)">
+                        <ng-container *ngFor="let item of lst_active">
+                            <br>
+                            <div class="card card-margin bg-default text-center" (click)="onListclick(item)"
+                                [title]="title" cdkDrag>
+                                <div class="card-body">
+                                    <blockquote class="card-bodyquote">
+                                        <footer>
+                                            <strong><cite class="cite-style cite">{{item.name}}</cite></strong>
+                                        </footer>
+                                        <p>{{item.descriptions}} <br>
+                                            {{item.startDate}} <b>To</b> {{item.endDate}}
+                                        </p>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <!-- <div cdkDropList [cdkDropListData]="lst_active" class="example-list"
+                        (cdkDropListDropped)="drop($event)">
+                        <div class="example-box" (dblclick)="onListclick(item)" *ngFor="let item of lst_active" cdkDrag>
+                            {{item.name}}</div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header text-warning">
+                    <strong><i class="fa fa-line-chart"></i>&nbsp;Inprocess</strong>
+                </div>
+                <div class="card-body" style="padding:5px">
+                    <div class="col pointer card-max-height " cdkDropList [cdkDropListData]="lst_inprocess"
+                        (cdkDropListDropped)="drop($event)">
+                        <ng-container *ngFor="let item of lst_inprocess">
+                            <br>
+                            <div class="card card-margin bg-default text-center" (click)="onListclick(item)"
+                                [title]="title" cdkDrag>
+                                <div class="card-body">
+                                    <blockquote class="card-bodyquote">
+                                        <footer>
+                                            <strong><cite class="cite-style cite">{{item.name}}</cite></strong>
+                                        </footer>
+                                        <p>{{item.descriptions}} <br>
+                                            {{item.startDate}} <b>To</b> {{item.endDate}}
+                                        </p>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <!-- <div cdkDropList [cdkDropListData]="lst_inprocess" class="example-list"
+                        (cdkDropListDropped)="drop($event)">
+                        <div class="example-box" (dblclick)="onListclick(item)" *ngFor="let item of lst_inprocess"
+                            cdkDrag>
+                            {{item.name}}</div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header text-success">
+                    <strong><i class="fa fa-check"></i>&nbsp;Completed</strong>
+                </div>
+                <div class="card-body" style="padding:5px">
+                    <div class="col pointer card-max-height" cdkDropList [cdkDropListData]="lst_completed"
+                        (cdkDropListDropped)="drop($event)">
+                        <ng-container *ngFor="let item of lst_completed">
+                            <br>
+                            <div class="card card-margin bg-default text-center" (click)="onListclick(item)"
+                                [title]="title" cdkDrag>
+                                <div class="card-body">
+                                    <blockquote class="card-bodyquote">
+                                        <footer>
+                                            <strong><cite class="cite-style cite">{{item.name}}</cite></strong>
+                                        </footer>
+                                        <p>{{item.descriptions}} <br>
+                                            {{item.startDate}} <b>To</b> {{item.endDate}}
+                                        </p>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <!-- <div cdkDropList [cdkDropListData]="lst_completed" class="example-list"
+                        (cdkDropListDropped)="drop($event)">
+                        <div class="example-box" (dblclick)="onListclick(item)" *ngFor="let item of lst_completed"
+                            cdkDrag>
+                            {{item.name}}</div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="isTask">
+    <app-add-task (modalClose)="onModalClose($event)" [editTask]="taskEdit" [projectId]="projectObj.id"></app-add-task>
+</ng-container>

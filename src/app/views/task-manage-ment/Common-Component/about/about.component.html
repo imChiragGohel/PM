@@ -1,0 +1,44 @@
+<div class="container">
+    <h2 class="bottom-margin">Project Management</h2>
+    <div class="row">
+        <div class="col top-margin">
+            <table class="table table-responsive">
+                <tbody>
+                    <tr>
+                        <th class="td-border-top-remove">Js Framework</th>
+                        <td class="td-border-top-remove">Angular</td>
+                    </tr>
+                    <tr>
+                        <th class="td-border-top-remove">Version</th>
+                        <td class="td-border-top-remove">8</td>
+                    </tr>
+                    <tr>
+                        <th class="td-border-top-remove">API</th>
+                        <td class="td-border-top-remove">No API (Use Mock(fack) Service)</td>
+                    </tr>
+                    <tr>
+                        <th class="td-border-top-remove">Features</th>
+                        <td class="td-border-top-remove">
+                            Project (Create,Edit,Delete),<br>
+                            Task (Create,Edit,Delete),<br>
+                            Drag & Drop Task,<br>
+                            Gannt Chart,<br>
+                            Kanban Board,<br>
+                            Make Custom Confirmation box<br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td-border-top-remove" colspan="2">
+                            <button class="btn btn-danger btn-sm" (click)="resetData()">Reset Data</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="confirmDialogOpen">
+    <app-confirmation-dialog-box (onDialog)="dialogEvent($event)" [dialogData]="dialogData">
+    </app-confirmation-dialog-box>
+</ng-container>

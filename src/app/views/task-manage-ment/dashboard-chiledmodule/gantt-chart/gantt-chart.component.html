@@ -1,0 +1,23 @@
+<ng-container>
+    <div class="row">
+        <div class="col-8">
+            <p class="pro-title">{{projectObj?.name}}</p>
+        </div>
+        <div class="col-4">
+            <!-- <button class="btn btn-secondary btn-sm float-right left-margin" (click)="onbackToKanban()">Back</button> -->
+            <button class="btn btn-primary btn-sm float-right" (click)="onAddTask()">Add Task</button>
+        </div>
+    </div>
+    <div class="row bottom-margin">
+        <div class="col-12" style="justify-content: center; display: flex;">
+            <span class="right-margin"><button class="btn btn-primary btn-sm" disabled></button> Pending</span>
+            <span class="right-margin"><button class="btn btn-warning btn-sm" disabled></button> Inprocess</span>
+            <span class="right-margin"><button class="btn btn-success btn-sm" disabled></button> Completed</span>
+        </div>
+    </div>
+    <div #gantt_here class='gantt-chart'></div>
+</ng-container>
+
+<ng-container *ngIf="isEditTask">
+    <app-add-task (modalClose)="onModalClose($event)" [editTask]="taskEdit" [projectId]="projectObj.id"></app-add-task>
+</ng-container>

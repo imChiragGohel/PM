@@ -1,0 +1,72 @@
+<div class="row bottom-margin">
+    <div class="col-3">
+        <select class="form-control" [(ngModel)]="projectId" (change)="onChangeProject($event)">
+            <option [value]="0">All Project</option>
+            <option *ngFor="let item of lst_project" [value]="item.id">{{item.name}}</option>
+        </select>
+    </div>
+    <div class="col-9">
+        <button class="btn btn-primary btn-sm float-right" (click)="onAddTask()">Add Task</button>
+        <!-- <input type="text" class="form-control div-search" placeholder="Search..." [(ngModel)]="searchProject"> -->
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <form [formGroup]="addTaskArray">
+            <table class="table table-back-color">
+                <thead>
+                    <th>Project</th>
+                    <th>Name</th>
+                    <th width="30%">Descriptions</th>
+                    <th>Status</th>
+                    <th>StartDate</th>
+                    <th>EndDate</th>
+                    <th>Action</th>
+                </thead>
+                <ng-container formArrayName="projects" *ngIf="projects?.controls?.length > 0">
+                    <ng-container *ngFor="let item of projects.controls; let i=index;" [formGroupName]="i">
+                        <ng-container formArrayName="listOfTask" *ngIf="listOfTask(i)?.controls?.length > 0">
+                            <ng-container *ngFor="let tsk of listOfTask(i).controls; let j=index;" [formGroupName]="j">
+                                <tbody>
+                                    <tr>
+                                        <td>{{item.value.projectName}}</td>
+                                        <td>{{tsk.value.name}}</td>
+                                        <td>{{tsk.value.descriptions}}</td>
+                                        <td>
+                                            <span class="badge"
+                                                [ngClass]="tsk.value.status == 1 ? 'badge-primary' : tsk.value.status == 2 ? 'badge-warning' : 'badge-success'">
+                                                {{tsk.value.status == 1 ? 'Pending' : tsk.value.status == 2 ? 'Inprocess' : 'Completed'}}
+                                            </span>
+                                        </td>
+                                        <td>{{tsk.value.startDate}}</td>
+                                        <td>{{tsk.value.endDate}}</td>
+                                        <td>
+                                            <button class="btn btn-success btn-sm right-margin"
+                                                (click)="onClickEditTask(item.value,tsk.value)">Edit</button>
+                                            <button class="btn btn-danger btn-sm"
+                                                (click)="onDeleteTask(item.value,tsk.value)">Delete</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+                <tbody *ngIf="projects?.controls?.length == 0">
+                    <tr>
+                        <td colspan="7">No Data Available.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+
+<ng-container *ngIf="addTaskComponent">
+    <app-add-task (modalClose)="onModalClose($event)" [projectId]="projectId" [editTask]="taskEdit"></app-add-task>
+</ng-container>
+
+<ng-container *ngIf="confirmDialogOpen">
+    <app-confirmation-dialog-box (onDialog)="dialogEvent($event)" [dialogData]="dialogData">
+    </app-confirmation-dialog-box>
+</ng-container>
