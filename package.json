@@ -50,7 +50,7 @@
     "firebase": "^6.2.4",
     "flag-icon-css": "^3.3.0",
     "font-awesome": "^4.7.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "mutationobserver-shim": "^0.3.3",
     "mydatepicker": "^2.6.6",
     "mydaterangepicker": "^4.2.1",
